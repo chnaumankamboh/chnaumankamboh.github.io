@@ -544,6 +544,20 @@ const DATA = {
       links: { code: "https://github.com/chnaumankamboh/docuchat-local-rag" }
     },
     {
+      id: "website-chatbot", label: "Website Chatbot", title: "RAG Website Chatbot with Lead Capture", cluster: "llm", pos: [.2, .48],
+      headline: "A chat widget that answers visitors from a company site's own content with a local LLM, spots buying intent, and turns it into a CRM lead.",
+      tags: ["RAG", "TF-IDF", "Ollama", "intent detection", "Flask", "HubSpot / Zoho"],
+      problem: "Answer website visitors around the clock from the company's own pages, and catch the ones who want a quote before they leave.",
+      data: "A company website crawled into pages, split into overlapping word chunks and indexed with scikit-learn TF-IDF (unigrams and bigrams). A password-protected admin page re-crawls and rebuilds it live.",
+      pipeline: ["Crawl the site", "Chunk + TF-IDF index", "Top chunks above threshold", "Ollama answer from context", "Intent: keywords, then LLM yes/no", "Lead to SQLite, email, CRM"],
+      failed: [
+        "TF-IDF scores on short marketing pages ran low (real questions scored 0.10 to 0.30), so a 0.15 threshold refused most of them.",
+        "The model answered in markdown bullets, which the chat widget showed as raw asterisks."
+      ],
+      worked: "Set the threshold to 0.08 from the real scores, searched follow-ups together with the previous question, and asked the model for plain-text answers.",
+      links: { code: "https://github.com/chnaumankamboh/rag-website-chatbot" }
+    },
+    {
       id: "jarvis", label: "Jarvis", title: "Jarvis: Voice Assistant with an LLM Agent", cluster: "agents",
       headline: "Speak a command and an LLM picks the right tool: open sites, play music, find files, check the weather and the time.",
       tags: ["LLM agents", "tool calling", "faster-whisper", "Ollama", "Claude API", "text-to-speech"],
@@ -576,13 +590,14 @@ const DATA = {
     fallback: "I don't have a note on that yet. Email me at ChNaumanKamboh@gmail.com and I'll answer.",
     suggestions: ["How does DocuChat answer questions?", "Tell me about Jarvis", "How does UniAttend recognise faces?", "What's your stack?", "Are you open to work?"],
     kb: [
-      { id: "about.md", keys: "who are you about yourself background intro introduce build make do", text: "I'm Nauman Saleem, an AI/ML engineer based in Lahore, Pakistan. I turn ideas into working systems: LLM apps that read documents, and real-time face recognition. I work hands-on with Python, PyTorch, LangChain and OpenCV." },
+      { id: "about.md", keys: "who are you about yourself background intro introduce build make do", text: "I'm Nauman Saleem, an AI/ML engineer based in Lahore, Pakistan. I turn ideas into working systems: LLM apps that read documents or answer website visitors, a voice assistant, and real-time face recognition. I work hands-on with Python, PyTorch, LangChain and OpenCV." },
       { id: "docuchat.md", keys: "docuchat rag document documents pdf pdfs chatbot chat retrieval faiss embeddings minilm tinyllama question questions answering sources", text: "DocuChat answers questions about your own PDFs, Word and text files, fully offline. MiniLM embeddings in a FAISS index find the relevant passages, and TinyLlama or any Ollama model writes the answer with its sources. You can upload new documents from the browser. Code: github.com/chnaumankamboh/docuchat-local-rag" },
       { id: "jarvis.md", keys: "jarvis voice assistant agent agents speech whisper tool tools calling ollama claude speak listen", text: "Jarvis is a voice assistant with an LLM agent brain. faster-whisper turns speech into text, a local model through Ollama (or Claude) decides which tool to call (websites, music, files, weather, time, news), and the reply is spoken aloud. Code: github.com/chnaumankamboh/jarvis-voice-assistant" },
       { id: "uniattend.md", keys: "uniattend face faces recognition computer vision opencv camera webcam attendance image images realtime deepface dlib expression emotion", text: "UniAttend recognises students from a webcam using dlib's 128-d face encodings, reads their expression with DeepFace, and marks attendance in Firebase with per-class Excel reports. It's a full desktop app with admin and teacher logins. Code: github.com/chnaumankamboh/uniattend-face-attendance" },
       { id: "stack.md", keys: "stack tools tool language languages framework frameworks python pytorch tensorflow tech technology skills library libraries azure cloud", text: "Python and SQL. PyTorch, TensorFlow and scikit-learn for models, Hugging Face and LangChain for LLM work, OpenCV for computer vision, ChromaDB for vector search, FastAPI and Streamlit to serve and demo. On the cloud side: Firebase and Azure AI Services, including Azure Functions and Document Intelligence." },
       { id: "llm.md", keys: "llm llms nlp transformers transformer langchain hugging huggingface gemini language local", text: "For language work I use Hugging Face Transformers, LangChain and the Gemini API, and I run models locally with Ollama. DocuChat and Jarvis both work without a cloud API." },
       { id: "education.md", keys: "education degree university study studied school cgpa gpa bs graduate graduated bahawalpur iub", text: "I have a BS in Intelligent Systems & Robotics from The Islamia University of Bahawalpur (Oct 2021 to Jul 2025), CGPA 3.50 / 4.00. My coursework covered AI, machine learning and computer vision." },
+      { id: "chatbot.md", keys: "chatbot website widget lead leads crm hubspot zoho tfidf scraper crawler sales intent flask customer visitor", text: "My RAG website chatbot answers visitors from a company site's own content: a crawler builds a TF-IDF index, a local Ollama model answers from the matching passages, and an LLM intent check turns buying questions into leads saved to SQLite and sent to HubSpot and Zoho. Code: github.com/chnaumankamboh/rag-website-chatbot" },
       { id: "cv.md", keys: "cv resume download pdf experience", text: "You can download my CV as a PDF with the Download CV button at the top of this page or next to my email at the bottom. It covers my AI/ML projects with links to their code, my skills, and my BS in Intelligent Systems & Robotics." },
       { id: "hire.md", keys:"hire hiring available availability job jobs work open role roles junior contact email linkedin reach", text: "Yes, I'm open to junior AI/ML roles. Email me at ChNaumanKamboh@gmail.com or message me on LinkedIn at linkedin.com/in/nauman-saleem." }
     ]
@@ -609,6 +624,8 @@ const DATA = {
     ["deepface", "facial expression"],
     ["pytesseract", "OCR for scanned PDFs"],
     ["fastapi", "serving"],
+    ["flask", "web apps and APIs"],
+    ["beautifulsoup4", "web crawling"],
     ["streamlit", "demo apps"],
     ["firebase-admin", "syncing records"],
     ["azure-ai-documentintelligence", "Azure Document Intelligence"]
