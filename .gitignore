@@ -1,0 +1,6 @@
+# Only the website is published. The CV sources, preview renders and the
+# local Wi-Fi server script stay on this PC.
+cv/
+serve.bat
+*.png
+!og-image.png
